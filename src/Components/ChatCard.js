@@ -28,6 +28,7 @@ export default function ChatCard({question,answer,
 
     React.useEffect(()=>{
         setLocalTime(timeArr[1]+' '+timeArr[2]);
+        data.time = localTime;
     },[])
 
   return (

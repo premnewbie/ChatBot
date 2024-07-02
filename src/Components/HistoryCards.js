@@ -23,9 +23,10 @@ export default function HistoryCards({data}) {
                         <h4>Soul Ai</h4>
                         <p>{data.answer}</p>
                         <div className='rating-and-feedback'>
-                            {data.ratings && <Rating  name="simple-controlled" value={data.ratings} readOnly/>}
-                            <p><strong>Feedback: </strong>{data.feedback}</p>
+                            {data.ratings!==0 && <Rating name="read-only" value={data.ratings} readOnly />}
+                            {data.feedback!=='' && <p><strong>Feedback: </strong>{data.feedback}</p>}
                         </div>
+                        <h6>{data.time}</h6>
                     </div>
                 </div>
             </Typography>    

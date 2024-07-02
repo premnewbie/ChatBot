@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect,useState } from 'react'
 import Navbar from './Navbar'
 import sampleData from '../data/sampleData.json';
 import soulai from '../Assets/soulai.png';
 import ChatCard from './ChatCard';
-import Feedback from './Feedback';
+import DefaultCards from './DefaultCards';
 
 export default function ConversationDialog({setOpen}) {
     const [showCards,setShowCards] = useState(true);
     const [question,setQuestion] = useState('');
     const [chatData,setChatData] = useState([]);
     const [localTime,setLocalTime] = useState();
-    const [localData,setLocalData] = useState([]); 
+    const [localData,setLocalData] = useState(JSON.parse(localStorage.getItem('botAi')) || []);
+    const [toggle,setToggle] = useState(true);
+    const [answer,setAnswer] = useState('');
+
 
     const handleGetAnswer = () => {
       const targetValue = { "question": question };
@@ -18,31 +21,45 @@ export default function ConversationDialog({setOpen}) {
       return exists;
     }
 
-    const handleAsk = () => {      
+    useEffect(() => {
       if(question){
         const exists = handleGetAnswer();
-        let tempAns=`Sorry, I did't understand query!`;
+        setAnswer(`Sorry, I did't understand query!`);
         if(exists){
           const response = sampleData.find((data) => data.question.toLowerCase() === question.toLowerCase());
-          tempAns=response.response;
+          setAnswer(response.response);
         }
         setShowCards(false);           
-        const obj = {"question": question,"answer":tempAns,"feedback":'',"ratings":0}
+        const obj = {"question": question,"answer":answer,"feedback":'',"ratings":0,"time":localTime}
         setChatData((prev) => [...prev,obj])
       }
-    }
+    },[toggle])
+
+
+    // const handleAsk = () => {      
+    //   if(question){
+    //     const exists = handleGetAnswer();
+    //     setAnswer(`Sorry, I did't understand query!`);
+    //     if(exists){
+    //       const response = sampleData.find((data) => data.question.toLowerCase() === question.toLowerCase());
+    //       setAnswer(response.response);
+    //     }
+    //     setShowCards(false);           
+    //     const obj = {"question": question,"answer":answer,"feedback":'',"ratings":0,"time":localTime}
+    //     setChatData((prev) => [...prev,obj])
+    //   }
+    // }
+
 
     const handleSave = () => {
-      setLocalData(JSON.parse(localStorage.getItem('botAi')));
-      setShowCards(true);      
-      if(chatData && localData!==undefined){
-        setLocalData((prev) => [...prev,...chatData])
-        console.log('local data ',localData)
+      if(chatData.length!==0 && localData.length!==0){
+        setLocalData((prev) => [...prev,chatData]);
         localStorage.setItem('botAi',JSON.stringify(localData));
-      } else if(chatData && localData===undefined){
+      } else if(chatData.length!==0 && localData.length===0){
         localStorage.setItem('botAi',JSON.stringify(chatData));
       }
-      setChatData([])
+      setChatData([]);
+      setShowCards(true);
     }
 
   return (
@@ -58,9 +75,10 @@ export default function ConversationDialog({setOpen}) {
             setLocalTime={setLocalTime} data={data}
             />)}
           </div>}
+          {showCards && <DefaultCards setQuestion={setQuestion} setAnswer={setAnswer} setToggle={setToggle} />}
           <div className='input-and-btns'> 
               <input type='text' onInput={(e)=>setQuestion(e.target.value)} />         
-              <button onClick={handleAsk}>Ask</button>
+              <button onClick={() => setToggle(!toggle)}>Ask</button>
               <button onClick={handleSave}>Save</button>
           </div>
         </div>        

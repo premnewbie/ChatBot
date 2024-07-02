@@ -1,16 +1,19 @@
 import { useState } from "react";
 import Homepage from "./Pages/Homepage";
 import Historypage from "./Pages/Historypage";
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
 
 function App() {
 
-  const [open, setOpen] = useState(false);  
-
   return (
-    <div className="App">
-      <Homepage open={open} setOpen={setOpen}/>
-      {/* <Historypage open={open} setOpen={setOpen}/> */}
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route exact path='/' Component={Homepage} />
+          <Route exact path='/history' Component={Historypage} />
+        </Routes>
+      </div>
+    </BrowserRouter>    
   );
 }
 

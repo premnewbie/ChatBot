@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import HistoryDialog from '../Components/HistoryDialog';
 import './Historypage.css';
 
-export default function Historypage({open,setOpen}) {
-
+export default function Historypage() {
+  const [open, setOpen] = useState(false);  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container>

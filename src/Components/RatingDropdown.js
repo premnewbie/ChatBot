@@ -8,7 +8,7 @@ export default function RatingDropdown() {
 
   const handleCardFilter = (value) => {
     if(value==='AllRatings'){
-      setFilteredCard(JSON.parse(localStorage.getItem('botAiData')))
+      setFilteredCard(JSON.parse(localStorage.getItem('botAi')))
     } else if(value==='NoRatings'){
       setFilteredCard(cardData.filter((card) => card.ratings===0))
     } else{
@@ -17,8 +17,8 @@ export default function RatingDropdown() {
   }
 
   useEffect(() => {
-    setCardData(JSON.parse(localStorage.getItem('botAiData')));
-    setFilteredCard(JSON.parse(localStorage.getItem('botAiData')))
+    setCardData(JSON.parse(localStorage.getItem('botAi')));
+    setFilteredCard(JSON.parse(localStorage.getItem('botAi')))
   },[])
 
   return (
