@@ -3,7 +3,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { Button,useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import newchat from '../Assets/newchat.png';
 import editicon from '../Assets/editicon.png';
 

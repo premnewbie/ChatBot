@@ -3,10 +3,6 @@
     height: 2rem;
 }
 
-.conversation-history{
-    /* margin-left: 2rem; */
-}
-
 .history-chats{
     overflow: hidden;
     overflow-y: auto;

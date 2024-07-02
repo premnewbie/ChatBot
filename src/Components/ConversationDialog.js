@@ -8,11 +8,9 @@ import Feedback from './Feedback';
 export default function ConversationDialog({setOpen}) {
     const [showCards,setShowCards] = useState(true);
     const [question,setQuestion] = useState('');
-    const [answer,setAnswer] = useState('');
     const [chatData,setChatData] = useState([]);
     const [localTime,setLocalTime] = useState();
     const [localData,setLocalData] = useState([]); 
-    // const [toggle,setToggle] = useState(true);
 
     const handleGetAnswer = () => {
       const targetValue = { "question": question };
@@ -26,10 +24,7 @@ export default function ConversationDialog({setOpen}) {
         let tempAns=`Sorry, I did't understand query!`;
         if(exists){
           const response = sampleData.find((data) => data.question.toLowerCase() === question.toLowerCase());
-          setAnswer(response.response);
           tempAns=response.response;
-        } else{
-          setAnswer(`Sorry, I did't understand query!`)
         }
         setShowCards(false);           
         const obj = {"question": question,"answer":tempAns,"feedback":'',"ratings":0}
