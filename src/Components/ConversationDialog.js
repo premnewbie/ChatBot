@@ -36,19 +36,19 @@ export default function ConversationDialog({setOpen}) {
     },[toggle])
 
 
-    // const handleAsk = () => {      
-    //   if(question){
-    //     const exists = handleGetAnswer();
-    //     setAnswer(`Sorry, I did't understand query!`);
-    //     if(exists){
-    //       const response = sampleData.find((data) => data.question.toLowerCase() === question.toLowerCase());
-    //       setAnswer(response.response);
-    //     }
-    //     setShowCards(false);           
-    //     const obj = {"question": question,"answer":answer,"feedback":'',"ratings":0,"time":localTime}
-    //     setChatData((prev) => [...prev,obj])
-    //   }
-    // }
+    const handleAsk = () => {      
+      if(question){
+        const exists = handleGetAnswer();
+        let tempAns = `Sorry, I did't understand query!`;
+        if(exists){
+          const response = sampleData.find((data) => data.question.toLowerCase() === question.toLowerCase());
+          tempAns = response.response;
+        }
+        setShowCards(false);           
+        const obj = {"question": question,"answer":tempAns,"feedback":'',"ratings":0,"time":localTime}
+        setChatData((prev) => [...prev,obj])
+      }
+    }
 
 
     const handleSave = () => {
@@ -78,7 +78,7 @@ export default function ConversationDialog({setOpen}) {
           {showCards && <DefaultCards setQuestion={setQuestion} setAnswer={setAnswer} setToggle={setToggle} />}
           <div className='input-and-btns'> 
               <input type='text' onInput={(e)=>setQuestion(e.target.value)} />         
-              <button onClick={() => setToggle(!toggle)}>Ask</button>
+              <button onClick={handleAsk}>Ask</button>
               <button onClick={handleSave}>Save</button>
           </div>
         </div>        
